@@ -14,5 +14,11 @@
         "out": true // set this to false to include "out" folder in search results
     },
     // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-    "typescript.tsc.autoDetect": "off"
+    "typescript.tsc.autoDetect": "off",
+    "workbench.colorCustomizations": {
+      "titleBar.activeForeground": "#000",
+      "titleBar.inactiveForeground": "#000000CC",
+      "titleBar.activeBackground": "#468b5d",
+      "titleBar.inactiveBackground": "#a1810acc"
+  },
 }

@@ -2,6 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
+let statusBar: vscode.StatusBarItem;
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -23,6 +25,17 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(disposable);
+
+  const statusBarCommandId = "pairodoro.showPairingStatus";
+
+  statusBar = vscode.window.createStatusBarItem(
+    vscode.StatusBarAlignment.Right,
+    100
+  );
+  statusBar.text = "Remember to share the keyboard!";
+  statusBar.command = statusBarCommandId;
+  context.subscriptions.push(statusBar);
+  statusBar.show();
 }
 
 // this method is called when your extension is deactivated
