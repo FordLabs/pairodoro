@@ -16,7 +16,7 @@ export default class TimerStatus {
     this.pairConfigs = pairConfigs;
     this.timerStatus.command = commandId;
     this.timerStatus.text = "Have fun pairing!";
-    this.timerStatus.color = defaultColor;
+    this.timerStatus.color = "#fff";
 
     this.time = workspace
     .getConfiguration("pairodoro")

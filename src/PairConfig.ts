@@ -4,7 +4,6 @@ import {
   StatusBarAlignment,
   workspace
 } from "vscode";
-import {defaultColor} from "./Configuration";
 
 
 export default class PairConfig {
@@ -18,8 +17,11 @@ export default class PairConfig {
     this.pairStatus.command = commandId;
     this.pairStatus.text = workspace
       .getConfiguration("pairodoro")
-      .get(propertyName) as string;
-    this.pairStatus.color = defaultColor;
+      .get(`${propertyName}.name`) as string;
+    
+      this.pairStatus.color = workspace
+    .getConfiguration("pairodoro")
+    .get(`${propertyName}.color`) as string;
   }
 
   show() {

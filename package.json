@@ -23,14 +23,34 @@
 			"title": "Pairodoro Config",
 			"properties": {
 				"pairodoro.player1": {
-					"type": "string",
-					"default": "Player 1",
-					"description": "Name of first pair"
+					"type": "object",
+					"properties" : {
+						"name": {
+							"type": "string",
+							"default": "Player 1",
+							"description": "Name of first pair"
+						},
+						"color": {
+							"type": "string",
+							"default": "#468b5d",
+							"description": "Text color for first pair"
+						}
+					}
 				},
 				"pairodoro.player2": {
-					"type": "string",
-					"default": "Player 2",
-					"description": "Name of second pair"
+					"type": "object",
+					"properties" : {
+						"name": {
+							"type": "string",
+							"default": "Player 2",
+							"description": "Name of second pair"
+						},
+						"color": {
+							"type": "string",
+							"default": "#408b5d",
+							"description": "Text color for second pair"
+						}
+					}
 				},
 				"pairodoro.seconds": {
 					"type": "integer",

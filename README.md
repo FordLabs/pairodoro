@@ -12,7 +12,14 @@ This displays the name of the developer who should currently be driving through 
 
 This extension contributes the following settings:
 
-* `pairodoro.player1`: Name of the first developer
-* `pairodoro.player2`: Name of the second developer
-* `pairodoro.seconds`: How many seconds until a pair swaps
+``` 
+   "pairodoro.player1": {
+        "color": "#fff",
+        "name": "First Pair"
+    },
+    "pairodoro.player2": {
+        "name": "Second Pair"
+    },
+    "pairodoro.seconds": 25, # How many seconds until a pair swaps
+```
 
