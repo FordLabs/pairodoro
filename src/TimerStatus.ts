@@ -1,6 +1,5 @@
 import { StatusBarItem, window, StatusBarAlignment, workspace } from "vscode";
 import PairConfig from "./PairConfig";
-import {defaultColor} from "./Configuration";
 export default class TimerStatus {
   timerStatus: StatusBarItem;
   interval: any;
