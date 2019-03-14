@@ -57,7 +57,7 @@ export default class TimerStatus {
     private notifyPairSwap() {
         window.withProgress({
             location: ProgressLocation.Notification,
-            title: `It is now ${this.pairConfigs[this.currentPairIndex].getName()}'s turn to type.`,
+            title: `It's almost ${this.getNextPair().getName()}'s turn to type!`,
             cancellable: true
         }, (progress, token) => {
             token.onCancellationRequested(() => { });
@@ -75,10 +75,14 @@ export default class TimerStatus {
         });
     }
 
-
     private displayNextPair() {
         this.pairConfigs[this.currentPairIndex].hide();
         this.currentPairIndex = (this.currentPairIndex + 1) % this.pairConfigs.length;
         this.pairConfigs[this.currentPairIndex].show();
     }
+
+    private getNextPair(): PairConfig {
+      return this.pairConfigs[(this.currentPairIndex + 1) % this.pairConfigs.length];
+    }
+
 }

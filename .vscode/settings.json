@@ -21,4 +21,13 @@
       "titleBar.activeBackground": "#468b5d",
       "titleBar.inactiveBackground": "#a1810acc"
   },
+  "pairodoro.player1": {
+    "name": "John",
+    "color": "#fff"
+  },
+  "pairodoro.player2": {
+    "name": "jonny",
+    "color": "#408b5d"
+  },
+  "pairodoro.seconds": 25
 }
