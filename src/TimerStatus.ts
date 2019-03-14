@@ -6,7 +6,7 @@ export default class TimerStatus {
   interval: any;
   time: number;
   pairConfigs: PairConfig[];
-  currentAuthor: PairConfig;
+  currentPairIndex: number;
 
   constructor(commandId: string, alignment: number, pairConfigs: PairConfig[]) {
     this.timerStatus = window.createStatusBarItem(
@@ -21,15 +21,16 @@ export default class TimerStatus {
     .getConfiguration("pairodoro")
     .get("seconds") as number;
 
-    this.currentAuthor = this.pairConfigs[0];
+    this.currentPairIndex = 0;
 
     this.interval = setInterval(() => {
       this.updateTimerValue();
     }, 1000);
+
   }
 
   show() {
-    this.currentAuthor.show();
+    this.pairConfigs[this.currentPairIndex].show();
     this.timerStatus.show();
   }
 
@@ -38,9 +39,9 @@ export default class TimerStatus {
      this.time  = workspace
      .getConfiguration("pairodoro")
      .get("seconds") as number;
-    this.currentAuthor.hide();
-     this.currentAuthor = this.pairConfigs[1];
-        this.currentAuthor.show();
+     this.pairConfigs[this.currentPairIndex].hide();
+     this.currentPairIndex = (this.currentPairIndex+1)%this.pairConfigs.length;
+     this.pairConfigs[this.currentPairIndex].show();
     }
     this.timerStatus.text = `${this.time}`;
     this.time--;
