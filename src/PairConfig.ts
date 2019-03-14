@@ -4,10 +4,11 @@ import {
   StatusBarAlignment,
   workspace
 } from "vscode";
+import {defaultColor} from "./Configuration";
+
 
 export default class PairConfig {
   pairStatus: StatusBarItem;
-  interval: any;
 
   constructor(commandId: string, alignment: number, propertyName: string) {
     this.pairStatus = window.createStatusBarItem(
@@ -18,7 +19,7 @@ export default class PairConfig {
     this.pairStatus.text = workspace
       .getConfiguration("pairodoro")
       .get(propertyName) as string;
-    this.pairStatus.color = "#468b5d";
+    this.pairStatus.color = defaultColor;
   }
 
   show() {

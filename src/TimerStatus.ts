@@ -1,6 +1,6 @@
 import { StatusBarItem, window, StatusBarAlignment, workspace } from "vscode";
 import PairConfig from "./PairConfig";
-
+import {defaultColor} from "./Configuration";
 export default class TimerStatus {
   timerStatus: StatusBarItem;
   interval: any;
@@ -16,7 +16,8 @@ export default class TimerStatus {
     this.pairConfigs = pairConfigs;
     this.timerStatus.command = commandId;
     this.timerStatus.text = "Have fun pairing!";
-    this.timerStatus.color = "#468b5d";
+    this.timerStatus.color = defaultColor;
+
     this.time = workspace
     .getConfiguration("pairodoro")
     .get("seconds") as number;
@@ -39,12 +40,20 @@ export default class TimerStatus {
      this.time  = workspace
      .getConfiguration("pairodoro")
      .get("seconds") as number;
-     this.pairConfigs[this.currentPairIndex].hide();
-     this.currentPairIndex = (this.currentPairIndex+1)%this.pairConfigs.length;
-     this.pairConfigs[this.currentPairIndex].show();
+     
+     this.displayNextPair();
     }
     this.timerStatus.text = `${this.time}`;
     this.time--;
-
   }
+
+  clearTimer() {
+      clearInterval(this.interval);
+  }
+
+    private displayNextPair() {
+        this.pairConfigs[this.currentPairIndex].hide();
+        this.currentPairIndex = (this.currentPairIndex + 1) % this.pairConfigs.length;
+        this.pairConfigs[this.currentPairIndex].show();
+    }
 }
