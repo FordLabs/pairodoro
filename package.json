@@ -4,7 +4,7 @@
 	"description": "Pairing Timer",
 	"publisher": "FordLabs",
 	"license": "MIT",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"icon": "logo.png",
 	"engines": {
 		"vscode": "^1.32.0"
@@ -13,25 +13,27 @@
 		"Other"
 	],
 	"repository": {
-        "type": "git",
-        "url": "https://github.com/FordLabs/pairodoro.git"
+		"type": "git",
+		"url": "https://github.com/FordLabs/pairodoro.git"
 	},
 	"activationEvents": [
 		"onCommand:extension.pairodoro"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [{
-			"command": "extension.pairodoro",
-			"title": "Pairodoro"
-		}],
+		"commands": [
+			{
+				"command": "extension.pairodoro",
+				"title": "Pairodoro"
+			}
+		],
 		"configuration": {
 			"type": "object",
 			"title": "Pairodoro Config",
 			"properties": {
 				"pairodoro.player1": {
 					"type": "object",
-					"properties" : {
+					"properties": {
 						"name": {
 							"type": "string",
 							"default": "Player 1",
@@ -46,7 +48,7 @@
 				},
 				"pairodoro.player2": {
 					"type": "object",
-					"properties" : {
+					"properties": {
 						"name": {
 							"type": "string",
 							"default": "Player 2",
