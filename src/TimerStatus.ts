@@ -1,4 +1,4 @@
-import { StatusBarItem, window, StatusBarAlignment, workspace } from "vscode";
+import { StatusBarItem, window, StatusBarAlignment, workspace, ProgressLocation } from "vscode";
 import PairConfig from "./PairConfig";
 export default class TimerStatus {
   timerStatus: StatusBarItem;
@@ -38,17 +38,42 @@ export default class TimerStatus {
     if (this.time === 0) {
      this.time  = workspace
      .getConfiguration("pairodoro")
-     .get("seconds") as number;
-     
+     .get("seconds") as number;     
      this.displayNextPair();
+    }
+
+    if(this.time === 5) {
+        this.notifyPairSwap();
     }
     this.timerStatus.text = `${this.time}`;
     this.time--;
   }
 
   clearTimer() {
-      clearInterval(this.interval);
-  }
+    clearInterval(this.interval);
+}
+
+    private notifyPairSwap() {
+        window.withProgress({
+            location: ProgressLocation.Notification,
+            title: `It is now ${this.pairConfigs[this.currentPairIndex].getName()}'s turn to type.`,
+            cancellable: true
+        }, (progress, token) => {
+            token.onCancellationRequested(() => { });
+            progress.report({ increment: 20 });
+            const interval = setInterval(() => {
+                progress.report({ increment: 20 });
+            }, 1000);
+            var promise = new Promise(resolve => {
+                setTimeout(() => {
+                    resolve();
+                    clearInterval(interval);
+                }, 5000);
+            });
+            return promise;
+        });
+    }
+
 
     private displayNextPair() {
         this.pairConfigs[this.currentPairIndex].hide();

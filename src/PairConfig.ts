@@ -5,9 +5,9 @@ import {
   workspace
 } from "vscode";
 
-
 export default class PairConfig {
   pairStatus: StatusBarItem;
+  currentName: string;
 
   constructor(commandId: string, alignment: number, propertyName: string) {
     this.pairStatus = window.createStatusBarItem(
@@ -15,9 +15,10 @@ export default class PairConfig {
       alignment
     );
     this.pairStatus.command = commandId;
-    this.pairStatus.text = workspace
-      .getConfiguration("pairodoro")
-      .get(`${propertyName}.name`) as string;
+    this.currentName = workspace
+    .getConfiguration("pairodoro")
+    .get(`${propertyName}.name`) as string;
+    this.pairStatus.text = this.currentName;
     
       this.pairStatus.color = workspace
     .getConfiguration("pairodoro")
@@ -35,5 +36,9 @@ export default class PairConfig {
   updateName(name: string) {
     this.pairStatus.text = name;
     this.pairStatus.show();
+  }
+
+  getName() {
+    return this.currentName;
   }
 }
