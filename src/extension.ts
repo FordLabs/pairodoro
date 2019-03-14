@@ -1,19 +1,12 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import TimerStatus from "./TimerStatus";
-import PairStatus from "./PairStatus";
+import PairConfig from "./PairConfig";
 
-let statusBar: vscode.StatusBarItem;
 let timeRemainingDisplay: TimerStatus;
-let pairStatusDisplay: PairStatus;
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  console.log('Congratulations, your extension "pairodoro" is now active!');
+let player1Config: PairConfig;
+let player2Config: PairConfig;
 
+export function activate(context: vscode.ExtensionContext) {
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
@@ -22,12 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
     () => {
       // The code you place here will be executed every time your command is executed
 
-      // Display a message box to the user
       vscode.window.showInformationMessage("Happy Pairing!");
-      vscode.window.createInputBox();
-      vscode.window.showInputBox().then(value => {
-        pairStatusDisplay.updateName(value!);
-      });
     }
   );
 
@@ -35,10 +23,13 @@ export function activate(context: vscode.ExtensionContext) {
 
   const statusBarCommandId = "pairodoro.showPairingStatus";
 
-  timeRemainingDisplay = new TimerStatus(statusBarCommandId, 99);
-  pairStatusDisplay = new PairStatus(statusBarCommandId, 100);
+  player1Config = new PairConfig(statusBarCommandId, 200, "player1");
+  player2Config = new PairConfig(statusBarCommandId, 200, "player2");
+  timeRemainingDisplay = new TimerStatus(statusBarCommandId, 199, [
+    player1Config,
+    player2Config
+  ]);
 
-  pairStatusDisplay.show();
   timeRemainingDisplay.show();
 }
 

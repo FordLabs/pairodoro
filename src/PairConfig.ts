@@ -2,25 +2,31 @@ import {
   StatusBarItem,
   window,
   StatusBarAlignment,
-  CompletionTriggerKind
+  workspace
 } from "vscode";
 
-export default class PairStatus {
+export default class PairConfig {
   pairStatus: StatusBarItem;
   interval: any;
 
-  constructor(commandId: string, alignment: number, name: string = "User 1") {
+  constructor(commandId: string, alignment: number, propertyName: string) {
     this.pairStatus = window.createStatusBarItem(
       StatusBarAlignment.Right,
       alignment
     );
     this.pairStatus.command = commandId;
-    this.pairStatus.text = name;
+    this.pairStatus.text = workspace
+      .getConfiguration("pairodoro")
+      .get(propertyName) as string;
     this.pairStatus.color = "#468b5d";
   }
 
   show() {
     this.pairStatus.show();
+  }
+
+  hide() {
+    this.pairStatus.hide();
   }
 
   updateName(name: string) {

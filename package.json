@@ -17,7 +17,28 @@
 		"commands": [{
 			"command": "extension.pairodoro",
 			"title": "Pairodoro"
-		}]
+		}],
+		"configuration": {
+			"type": "object",
+			"title": "Pairodoro Config",
+			"properties": {
+				"pairodoro.player1": {
+					"type": "string",
+					"default": "Player 1",
+					"description": "Name of first pair"
+				},
+				"pairodoro.player2": {
+					"type": "string",
+					"default": "Player 2",
+					"description": "Name of second pair"
+				},
+				"pairodoro.seconds": {
+					"type": "integer",
+					"default": "120",
+					"description": "Seconds until pair swap"
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn run compile",
