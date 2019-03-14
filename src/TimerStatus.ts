@@ -14,7 +14,7 @@ export default class TimerStatus {
     );
     this.pairConfigs = pairConfigs;
     this.timerStatus.command = commandId;
-    this.timerStatus.text = "Have fun pairing!";
+    this.timerStatus.text = "Happy Pairing!";
     this.timerStatus.color = "#fff";
 
     this.time = workspace
@@ -45,7 +45,8 @@ export default class TimerStatus {
     if(this.time === 5) {
         this.notifyPairSwap();
     }
-    this.timerStatus.text = `${this.time}`;
+
+    this.timerStatus.text = `${Math.floor(this.time / 60)}`.padStart(2, '0') + ':' + `${this.time % 60}`.padStart(2, '0');
     this.time--;
   }
 
