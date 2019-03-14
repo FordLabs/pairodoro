@@ -5,6 +5,7 @@
 	"publisher": "FordLabs",
 	"license": "MIT",
 	"version": "0.0.1",
+	"icon": "logo.png",
 	"engines": {
 		"vscode": "^1.32.0"
 	},
