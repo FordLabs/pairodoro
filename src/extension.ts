@@ -1,8 +1,12 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+import TimerStatus from "./TimerStatus";
+import PairStatus from "./PairStatus";
 
 let statusBar: vscode.StatusBarItem;
+let timeRemainingDisplay: TimerStatus;
+let pairStatusDisplay: PairStatus;
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -20,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
       // The code you place here will be executed every time your command is executed
 
       // Display a message box to the user
-      vscode.window.showInformationMessage("Pairodoro");
+      vscode.window.showInformationMessage("Happy Pairing!");
     }
   );
 
@@ -28,14 +32,11 @@ export function activate(context: vscode.ExtensionContext) {
 
   const statusBarCommandId = "pairodoro.showPairingStatus";
 
-  statusBar = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Right,
-    100
-  );
-  statusBar.text = "Remember to share the keyboard!";
-  statusBar.command = statusBarCommandId;
-  context.subscriptions.push(statusBar);
-  statusBar.show();
+  timeRemainingDisplay = new TimerStatus(statusBarCommandId, 99);
+  pairStatusDisplay = new PairStatus(statusBarCommandId, 100);
+
+  pairStatusDisplay.show();
+  timeRemainingDisplay.show();
 }
 
 // this method is called when your extension is deactivated
