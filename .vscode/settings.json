@@ -1,0 +1,18 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "editor.formatOnSave": true,
+    "editor.fontSize": 13,
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true,
+      "**/.history": true
+    },
+    "editor.minimap.enabled": false,
+  "files.useExperimentalFileWatcher": true,
+    "search.exclude": {
+        "out": true // set this to false to include "out" folder in search results
+    },
+    // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
+    "typescript.tsc.autoDetect": "off"
+}
