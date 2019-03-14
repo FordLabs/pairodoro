@@ -7,7 +7,6 @@ import PairStatus from "./PairStatus";
 let statusBar: vscode.StatusBarItem;
 let timeRemainingDisplay: TimerStatus;
 let pairStatusDisplay: PairStatus;
-
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -25,6 +24,10 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Display a message box to the user
       vscode.window.showInformationMessage("Happy Pairing!");
+      vscode.window.createInputBox();
+      vscode.window.showInputBox().then(value => {
+        pairStatusDisplay.updateName(value!);
+      });
     }
   );
 
