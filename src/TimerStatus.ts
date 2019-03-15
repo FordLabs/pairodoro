@@ -21,7 +21,7 @@ export default class TimerStatus {
     context.subscriptions.push(
       commands.registerCommand(statusBarCommandId, () => {
         window
-          .showInformationMessage("Pause pairing timer?", "Pause", "Continue", "Cheeseburger")
+          .showInformationMessage("Pause pairing timer?", "Pause", "Continue")
           .then(selection => {
             if (selection === "Pause") {
               this.isPaused = true;
