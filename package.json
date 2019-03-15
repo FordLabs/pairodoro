@@ -33,6 +33,10 @@
 				"title": "Pairodoro"
 			}
 		],
+		"keybindings": [{
+            "command": "extension.pairodoro",
+            "key": "shift+cmd+p"
+        }],
 		"configuration": {
 			"type": "object",
 			"title": "Pairodoro Config",
