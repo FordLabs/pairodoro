@@ -4,7 +4,7 @@
 	"description": "Pairing Timer",
 	"publisher": "FordLabs",
 	"license": "MIT",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"icon": "logo.png",
 	"engines": {
 		"vscode": "^1.32.0"
@@ -20,11 +20,11 @@
 		"onCommand:extension.pairodoro"
 	],
 	"keywords": [
-        "paired programming",
-        "pair",
-        "pairing",
-        "pomodoro"
-    ],
+		"paired programming",
+		"pair",
+		"pairing",
+		"pomodoro"
+	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
@@ -33,10 +33,12 @@
 				"title": "Pairodoro"
 			}
 		],
-		"keybindings": [{
-            "command": "extension.pairodoro",
-            "key": "shift+cmd+p"
-        }],
+		"keybindings": [
+			{
+				"command": "extension.pairodoro",
+				"key": "shift+cmd+p"
+			}
+		],
 		"configuration": {
 			"type": "object",
 			"title": "Pairodoro Config",
