@@ -1,4 +1,4 @@
-import { StatusBarItem, window, StatusBarAlignment, workspace, ProgressLocation } from "vscode";
+import { StatusBarItem, window, StatusBarAlignment, workspace, ProgressLocation, commands, ExtensionContext } from "vscode";
 import PairConfig from "./PairConfig";
 export default class TimerStatus {
   timerStatus: StatusBarItem;
@@ -7,13 +7,32 @@ export default class TimerStatus {
   pairConfigs: PairConfig[];
   currentPairIndex: number;
 
-  constructor(commandId: string, alignment: number, pairConfigs: PairConfig[]) {
+  isPaused = false;
+
+  constructor(context: ExtensionContext, alignment: number, pairConfigs: PairConfig[]) {
     this.timerStatus = window.createStatusBarItem(
       StatusBarAlignment.Right,
       alignment
     );
     this.pairConfigs = pairConfigs;
-    this.timerStatus.command = commandId;
+
+    const statusBarCommandId = "pairodoro.showPairingStatus";
+
+    context.subscriptions.push(
+      commands.registerCommand(statusBarCommandId, () => {
+        window
+          .showInformationMessage("Pause pairing timer?", "Pause", "Continue", "Cheeseburger")
+          .then(selection => {
+            if (selection === "Pause") {
+              this.isPaused = true;
+            } else if (selection === "Continue") {
+              this.isPaused = false;
+            }
+          });
+      })
+    );
+
+    this.timerStatus.command = statusBarCommandId;
     this.timerStatus.text = "Happy Pairing!";
     this.timerStatus.color = "#fff";
 
@@ -24,7 +43,9 @@ export default class TimerStatus {
     this.currentPairIndex = 0;
 
     this.interval = setInterval(() => {
-      this.updateTimerValue();
+      if (!this.isPaused) {
+        this.updateTimerValue();
+      }
     }, 1000);
 
   }
@@ -35,6 +56,7 @@ export default class TimerStatus {
   }
 
   updateTimerValue() {
+
     if (this.time === 0) {
      this.time  = workspace
      .getConfiguration("pairodoro")
@@ -48,6 +70,7 @@ export default class TimerStatus {
 
     this.timerStatus.text = `${Math.floor(this.time / 60)}`.padStart(2, '0') + ':' + `${this.time % 60}`.padStart(2, '0');
     this.time--;
+    
   }
 
   clearTimer() {

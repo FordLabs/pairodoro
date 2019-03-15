@@ -15,11 +15,9 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(disposable);
 
-  const statusBarCommandId = "pairodoro.showPairingStatus";
-
-  player1Config = new PairConfig(statusBarCommandId, 200, "player1");
-  player2Config = new PairConfig(statusBarCommandId, 200, "player2");
-  timeRemainingDisplay = new TimerStatus(statusBarCommandId, 199, [
+  player1Config = new PairConfig("", 200, "player1");
+  player2Config = new PairConfig("", 200, "player2");
+  timeRemainingDisplay = new TimerStatus(context, 199, [
     player1Config,
     player2Config
   ]);
