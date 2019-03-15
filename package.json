@@ -19,6 +19,12 @@
 	"activationEvents": [
 		"onCommand:extension.pairodoro"
 	],
+	"keywords": [
+        "paired programming",
+        "pair",
+        "pairing",
+        "pomodoro"
+    ],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
