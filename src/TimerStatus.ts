@@ -21,12 +21,16 @@ export default class TimerStatus {
     context.subscriptions.push(
       commands.registerCommand(statusBarCommandId, () => {
         window
-          .showInformationMessage("Pause pairing timer?", "Pause", "Continue")
+          .showInformationMessage("Pause pairing timer?", "Pause", "Continue", "Reset")
           .then(selection => {
             if (selection === "Pause") {
               this.isPaused = true;
             } else if (selection === "Continue") {
               this.isPaused = false;
+            } else if (selection === "Reset") {
+              this.time = workspace
+              .getConfiguration("pairodoro")
+              .get("seconds") as number;
             }
           });
       })
