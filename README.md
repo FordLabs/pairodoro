@@ -1,4 +1,9 @@
-# pairodoro
+[![Build Status](https://dev.azure.com/LDOBRYDE/Pairodoro/_apis/build/status/FordLabs.pairodoro?branchName=master)](https://dev.azure.com/LDOBRYDE/Pairodoro/_build/latest?definitionId=1&branchName=master)
+[![Version](https://vsmarketplacebadge.apphb.com/version-short/FordLabs.pairodoro.svg)](https://marketplace.visualstudio.com/items?itemName=FordLabs.pairodoro)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/FordLabs.pairodoro.svg)](https://marketplace.visualstudio.com/items?itemName=FordLabs.pairodoro)
+[![Reviews](https://vsmarketplacebadge.apphb.com/rating-short/FordLabs.pairodoro.svg)](https://marketplace.visualstudio.com/items?itemName=FordLabs.pairodoro#review-details)
+
+# Pairodoro
 
 Pairodoro is a timer to help better facilitate paired programming in vscode. 
 
