@@ -72,7 +72,7 @@ export default class TimerStatus {
         this.notifyPairSwap();
     }
 
-    this.timerStatus.text = `${Math.floor(this.time / 60)}`.padStart(2, '0') + ':' + `${this.time % 60}`.padStart(2, '0');
+    this.timerStatus.text = `$(clock) ${Math.floor(this.time / 60)}`.padStart(2, '0') + ':' + `${this.time % 60}`.padStart(2, '0');
     this.time--;
     
   }
