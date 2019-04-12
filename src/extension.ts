@@ -23,6 +23,14 @@ export function activate(context: vscode.ExtensionContext) {
   ]);
 
   timeRemainingDisplay.show();
+
+  vscode.workspace.onDidChangeTextDocument(e => {
+    const currentPair = context.workspaceState.get("currentPair");
+    let keystrokeCount = context.workspaceState.get(`${currentPair}`) as number;
+    keystrokeCount++;
+    context.workspaceState.update(`${currentPair}`, keystrokeCount);
+    console.log(context.workspaceState.get(`${currentPair}`));
+  });
 }
 
 // this method is called when your extension is deactivated

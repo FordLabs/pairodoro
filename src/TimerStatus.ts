@@ -6,18 +6,22 @@ export default class TimerStatus {
   time: number;
   pairConfigs: PairConfig[];
   currentPairIndex: number;
+  context: ExtensionContext;
 
   isPaused = false;
 
   constructor(context: ExtensionContext, alignment: number, pairConfigs: PairConfig[]) {
+    this.context = context;
     this.timerStatus = window.createStatusBarItem(
       StatusBarAlignment.Right,
       alignment
     );
     this.pairConfigs = pairConfigs;
+    this.context.workspaceState.update(this.pairConfigs[0].getName(), 0);
+    this.context.workspaceState.update(this.pairConfigs[1].getName(), 0);
 
     const statusBarCommandId = "pairodoro.showPairingStatus";
-
+      const metricsCommandId = "pairodoro.showMetrics";
     context.subscriptions.push(
       commands.registerCommand(statusBarCommandId, () => {
         window
@@ -66,7 +70,7 @@ export default class TimerStatus {
      .getConfiguration("pairodoro")
      .get("seconds") as number;     
      this.displayNextPair();
-    }
+     this.context.workspaceState.update('currentPair', this.pairConfigs[this.currentPairIndex].getName())}
 
     if(this.time === 5) {
         this.notifyPairSwap();
