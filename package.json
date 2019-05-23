@@ -1,7 +1,7 @@
 {
 	"name": "pairodoro",
 	"displayName": "Pairodoro",
-	"description": "Pairing Timer",
+	"description": "Paired Programming Timer",
 	"publisher": "FordLabs",
 	"license": "MIT",
 	"version": "1.4.0",
@@ -46,6 +46,11 @@
 			"properties": {
 				"pairodoro.player1": {
 					"type": "object",
+					"description": "User definition for first pair",
+					"default": {
+						"name": "Player 1",
+						"color": "#fff"
+					},
 					"properties": {
 						"name": {
 							"type": "string",
@@ -61,6 +66,11 @@
 				},
 				"pairodoro.player2": {
 					"type": "object",
+					"description": "User definition for second pair",
+					"default": {
+						"name": "Player 2",
+						"color": "#fff"
+					},
 					"properties": {
 						"name": {
 							"type": "string",
