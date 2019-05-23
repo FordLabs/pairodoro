@@ -1,4 +1,12 @@
-import { StatusBarItem, window, StatusBarAlignment, workspace, ProgressLocation, commands, ExtensionContext } from "vscode";
+import {
+  StatusBarItem,
+  window,
+  StatusBarAlignment,
+  workspace,
+  ProgressLocation,
+  commands,
+  ExtensionContext
+} from "vscode";
 import PairConfig from "./PairConfig";
 export default class TimerStatus {
   timerStatus: StatusBarItem;
@@ -6,33 +14,41 @@ export default class TimerStatus {
   time: number;
   pairConfigs: PairConfig[];
   currentPairIndex: number;
+  context: ExtensionContext;
 
   isPaused = false;
 
   constructor(context: ExtensionContext, alignment: number, pairConfigs: PairConfig[]) {
-    this.timerStatus = window.createStatusBarItem(
-      StatusBarAlignment.Right,
-      alignment
-    );
+    this.context = context;
+    this.timerStatus = window.createStatusBarItem(StatusBarAlignment.Right, alignment);
     this.pairConfigs = pairConfigs;
+    this.context.workspaceState.update(this.pairConfigs[0].getName(), 0);
+    this.context.workspaceState.update(this.pairConfigs[1].getName(), 0);
 
     const statusBarCommandId = "pairodoro.showPairingStatus";
 
     context.subscriptions.push(
       commands.registerCommand(statusBarCommandId, () => {
-        window
-          .showInformationMessage("Pause pairing timer?", "Pause", "Continue", "Reset")
-          .then(selection => {
-            if (selection === "Pause") {
-              this.isPaused = true;
-            } else if (selection === "Continue") {
-              this.isPaused = false;
-            } else if (selection === "Reset") {
-              this.time = workspace
-              .getConfiguration("pairodoro")
-              .get("seconds") as number;
-            }
-          });
+        window.showInformationMessage("Pause pairing timer?", "Pause", "Continue", "Reset", "End").then(selection => {
+          if (selection === "Pause") {
+            this.isPaused = true;
+          } else if (selection === "Continue") {
+            this.isPaused = false;
+          } else if (selection === "Reset") {
+            this.time = workspace.getConfiguration("pairodoro").get("seconds") as number;
+          } else if (selection === "End") {
+            window.showInformationMessage(
+              `${this.pairConfigs[0].getName()}: Typed 
+                ${this.context.workspaceState.get(this.pairConfigs[0].getName())}
+                characters.\n
+                ${this.pairConfigs[1].getName()}: Typed 
+                ${this.context.workspaceState.get(this.pairConfigs[1].getName())}
+                characters.`
+            );
+            this.clearTimer();
+            this.time = 0;
+          }
+        });
       })
     );
 
@@ -40,9 +56,7 @@ export default class TimerStatus {
     this.timerStatus.text = "Happy Pairing!";
     this.timerStatus.color = "#fff";
 
-    this.time = workspace
-    .getConfiguration("pairodoro")
-    .get("seconds") as number;
+    this.time = workspace.getConfiguration("pairodoro").get("seconds") as number;
 
     this.currentPairIndex = 0;
 
@@ -51,65 +65,65 @@ export default class TimerStatus {
         this.updateTimerValue();
       }
     }, 1000);
-
   }
 
   show() {
     this.pairConfigs[this.currentPairIndex].show();
     this.timerStatus.show();
+    this.context.workspaceState.update("currentPair", this.pairConfigs[this.currentPairIndex].getName());
   }
 
   updateTimerValue() {
-
     if (this.time === 0) {
-     this.time  = workspace
-     .getConfiguration("pairodoro")
-     .get("seconds") as number;     
-     this.displayNextPair();
+      this.time = workspace.getConfiguration("pairodoro").get("seconds") as number;
+      this.displayNextPair();
+      this.context.workspaceState.update("currentPair", this.pairConfigs[this.currentPairIndex].getName());
     }
 
-    if(this.time === 5) {
-        this.notifyPairSwap();
+    if (this.time === 5) {
+      this.notifyPairSwap();
     }
 
-    this.timerStatus.text = `${Math.floor(this.time / 60)}`.padStart(2, '0') + ':' + `${this.time % 60}`.padStart(2, '0');
+    this.timerStatus.text =
+      `$(clock) ${Math.floor(this.time / 60)}`.padStart(2, "0") + ":" + `${this.time % 60}`.padStart(2, "0");
     this.time--;
-    
   }
 
   clearTimer() {
     clearInterval(this.interval);
-}
+  }
 
-    private notifyPairSwap() {
-        window.withProgress({
-            location: ProgressLocation.Notification,
-            title: `It's almost ${this.getNextPair().getName()}'s turn to type!`,
-            cancellable: true
-        }, (progress, token) => {
-            token.onCancellationRequested(() => { });
-            progress.report({ increment: 20 });
-            const interval = setInterval(() => {
-                progress.report({ increment: 20 });
-            }, 1000);
-            var promise = new Promise(resolve => {
-                setTimeout(() => {
-                    resolve();
-                    clearInterval(interval);
-                }, 5000);
-            });
-            return promise;
+  private notifyPairSwap() {
+    window.withProgress(
+      {
+        location: ProgressLocation.Notification,
+        title: `It's almost ${this.getNextPair().getName()}'s turn to type!`,
+        cancellable: true
+      },
+      (progress, token) => {
+        token.onCancellationRequested(() => {});
+        progress.report({ increment: 20 });
+        const interval = setInterval(() => {
+          progress.report({ increment: 20 });
+        }, 1000);
+        var promise = new Promise(resolve => {
+          setTimeout(() => {
+            resolve();
+            clearInterval(interval);
+          }, 5000);
         });
-    }
+        return promise;
+      }
+    );
+  }
 
-    private displayNextPair() {
-        this.pairConfigs[this.currentPairIndex].hide();
-        this.currentPairIndex = (this.currentPairIndex + 1) % this.pairConfigs.length;
-        this.pairConfigs[this.currentPairIndex].show();
-    }
+  private displayNextPair() {
+    this.pairConfigs[this.currentPairIndex].hide();
+    this.currentPairIndex = (this.currentPairIndex + 1) % this.pairConfigs.length;
+    this.pairConfigs[this.currentPairIndex].show();
+  }
 
-    private getNextPair(): PairConfig {
-      return this.pairConfigs[(this.currentPairIndex + 1) % this.pairConfigs.length];
-    }
-
+  private getNextPair(): PairConfig {
+    return this.pairConfigs[(this.currentPairIndex + 1) % this.pairConfigs.length];
+  }
 }
