@@ -4,7 +4,7 @@
 	"description": "Paired Programming Timer",
 	"publisher": "FordLabs",
 	"license": "MIT",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"icon": "logo.png",
 	"engines": {
 		"vscode": "^1.32.0"
@@ -113,13 +113,13 @@
 	},
 	"husky": {
 		"hooks": {
-		  "pre-commit": "lint-staged"
+			"pre-commit": "lint-staged"
 		}
-	  },
-	"lint-staged":{
-	"*.ts*": [
-		"prettier --write --parser typescript",
-		"git add"
+	},
+	"lint-staged": {
+		"*.ts*": [
+			"prettier --write --parser typescript",
+			"git add"
 		]
 	}
 }
