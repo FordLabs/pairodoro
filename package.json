@@ -36,8 +36,8 @@
 		"keybindings": [
 			{
 				"command": "extension.pairodoro",
-				"key": "shift+ctrl+p",
-				"mac": "shift+cmd+p"
+				"key": "alt+ctrl+p",
+				"mac": "alt+cmd+p"
 			}
 		],
 		"configuration": {
