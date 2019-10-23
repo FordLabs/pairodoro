@@ -18,16 +18,22 @@ export function activate(context: vscode.ExtensionContext) {
 
   timeRemainingDisplay.show();
 
-  // TODO: Move this handler function into a method
-  vscode.workspace.onDidChangeTextDocument(e => {
-    const currentPair = context.workspaceState.get("currentPair");
-    let keystrokeCount = context.workspaceState.get(`${currentPair}`) as number;
-    keystrokeCount++;
-    context.workspaceState.update(`${currentPair}`, keystrokeCount);
-  });
+  trackKeystrokesForPair(context);
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {
   timeRemainingDisplay.clearTimer();
+}
+
+function trackKeystrokesForPair(context: vscode.ExtensionContext) {
+  vscode.workspace.onDidChangeTextDocument(e => {
+    addKeystroke(context);
+  });
+}
+
+function addKeystroke(context: vscode.ExtensionContext) {
+  const currentPair = context.workspaceState.get("currentPair");
+  let keystrokeCount = context.workspaceState.get(`${currentPair}`) as number;
+  context.workspaceState.update(`${currentPair}`, ++keystrokeCount);
 }
